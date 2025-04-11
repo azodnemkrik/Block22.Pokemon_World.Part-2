@@ -50,6 +50,11 @@ const fetchSinglePokemon = async (singlePoke) => {
     const pokeData = await fetch(singlePoke.url)
     const singlePokeData = await pokeData.json()
     console.log(singlePokeData)
+    renderSinglePokemon(singlePokeData)
+
+}
+
+const renderSinglePokemon = (singlePokeData) => {
 
     const abilities = singlePokeData.abilities.map((ability) => {
         console.log(ability.ability.name)
@@ -57,7 +62,7 @@ const fetchSinglePokemon = async (singlePoke) => {
     })
 
 
-    singlePokeDiv.innerHTML = `<h2>Selected Pokemon</h2>
+    allPokeDiv.innerHTML = `<h2>Selected Pokemon</h2>
         <h2>${singlePokeData.name}</h2>
         <img src=${singlePokeData.sprites.front_default} />
         <h3>Abilities</h3>
