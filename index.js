@@ -33,35 +33,8 @@ const render = async () => {
     // If I found a single pokemon, empty the allPokeDiv.
     // Else, show me the list of pokemon
 
-    allPokeDiv.innerHTML = singlePoke ? "" : pokeList.join("")
+    allPokeDiv.innerHTML = singlePoke ? fetchSinglePokemon(singlePoke) : pokeList.join("")
     
-    if(singlePoke) {
-        try {
-            const pokeData = await fetch(singlePoke.url)
-            const singlePokeData = await pokeData.json()
-            console.log(singlePokeData)
-
-            const abilities = singlePokeData.abilities.map((ability) => {
-                console.log(ability.ability.name)
-                return `<p>${ability.ability.name}</p>` 
-            })
-
-
-            singlePokeDiv.innerHTML = `
-                <h2>Selected Pokemon</h2>
-                <h2>${singlePokeData.name}</h2>
-                <img src=${singlePokeData.sprites.front_default} />
-                <h2>Abilities</h2>
-            ` + abilities.join("") +`
-                <p>Generation: ${singlePokeData.id*1 < 151 ? "1" : "2" }</p>
-                <a href=#>Back to all Pokemon</a>
-            `
-        } catch (error) {
-            console.error(error)
-        }
-    } else {
-        singlePokeDiv.innerHTML = ""
-    }
 }
 
 const fetchAllPokemons = async () => {
@@ -71,6 +44,32 @@ const fetchAllPokemons = async () => {
     // pokemons = data.results
     // render()
     return data.results
+}
+
+const fetchSinglePokemon = async (singlePoke) => {
+    try {
+        const pokeData = await fetch(singlePoke.url)
+        const singlePokeData = await pokeData.json()
+        console.log(singlePokeData)
+
+        const abilities = singlePokeData.abilities.map((ability) => {
+            console.log(ability.ability.name)
+            return `<p>${ability.ability.name}</p>` 
+        })
+
+
+        allPokeDiv.innerHTML = `
+            <h2>Selected Pokemon</h2>
+            <h2>${singlePokeData.name}</h2>
+            <img src=${singlePokeData.sprites.front_default} />
+            <h2>Abilities</h2>
+        ` + abilities.join("") +`
+            <p>Generation: ${singlePokeData.id*1 < 151 ? "1" : "2" }</p>
+            <a href=#>Back to all Pokemon</a>
+        `
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 // fetchAllPokemons()
