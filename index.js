@@ -53,6 +53,7 @@ const render = async () => {
                 <img src=${singlePokeData.sprites.front_default} />
                 <h2>Abilities</h2>
             ` + abilities.join("") +`
+                <p>Generation: ${singlePokeData.id*1 < 151 ? "1" : "2" }</p>
                 <a href=#>Back to all Pokemon</a>
             `
         } catch (error) {
@@ -64,7 +65,7 @@ const render = async () => {
 }
 
 const fetchAllPokemons = async () => {
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=100&offset=0")
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=251&offset=0")
     const data = await response.json()
     pokemons = data.results
     console.log(pokemons)
