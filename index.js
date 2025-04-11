@@ -67,9 +67,18 @@ const render = async () => {
 const fetchAllPokemons = async () => {
     const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=251&offset=0")
     const data = await response.json()
-    pokemons = data.results
     console.log(pokemons)
-    render()
+    // pokemons = data.results
+    // render()
+    return data.results
 }
 
-fetchAllPokemons()
+// fetchAllPokemons()
+
+const init = async () => {
+    const pokeData = await fetchAllPokemons()
+    console.log(pokeData)
+    pokemons = pokeData
+    render()
+}
+init()
