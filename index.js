@@ -35,11 +35,18 @@ const render = async () => {
             const singlePokeData = await pokeData.json()
             console.log(singlePokeData)
 
+            const abilities = singlePokeData.abilities.map((ability) => {
+                console.log(ability.ability.name)
+                return `<p>${ability.ability.name}</p>` 
+            })
+
+
             singlePokeDiv.innerHTML = `
                 <h2>Selected Pokemon</h2>
                 <h2>${singlePokeData.name}</h2>
                 <img src=${singlePokeData.sprites.front_default} />
-            `
+                <h2>Abilities</h2>
+            ` + abilities.join("")
         } catch (error) {
             console.error(error)
         }
