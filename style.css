@@ -1,9 +1,9 @@
-#allPoke{
+#pokeContainer{
     display: flex;
     flex-wrap: wrap;
 }
 
-#allPoke > a {
+#pokeContainer > a {
     border: 1px black solid;
     margin: 1rem;
     padding: 1rem;

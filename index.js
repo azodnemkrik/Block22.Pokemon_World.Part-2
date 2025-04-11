@@ -11,10 +11,9 @@ window.addEventListener("hashchange", () => {
 const render = async () => {
     // Go through STATE Array and render links – Add # here!
     const pokeList = pokemons.map((poke) => {
-        return `
-            <a href=#${poke.name}>${poke.name}</div>
-        `
+        return `<a href=#${poke.name}>${poke.name}</a>`
     })
+
     // allPokeDiv.innerHTML = pokeList.join("")
 
     // Get CURRENT #URL from browser location. Remove "#" by .slice(1) so it's just the name. 
@@ -33,7 +32,7 @@ const render = async () => {
     // If I found a single pokemon, empty the allPokeDiv.
     // Else, show me the list of pokemon
 
-    allPokeDiv.innerHTML = singlePoke ? fetchSinglePokemon(singlePoke) : pokeList.join("")
+    allPokeDiv.innerHTML = singlePoke ? fetchSinglePokemon(singlePoke) : `<div id="pokeContainer">${pokeList.join("")}</div>`
     
 }
 
@@ -47,29 +46,25 @@ const fetchAllPokemons = async () => {
 }
 
 const fetchSinglePokemon = async (singlePoke) => {
-    try {
-        const pokeData = await fetch(singlePoke.url)
-        const singlePokeData = await pokeData.json()
-        console.log(singlePokeData)
 
-        const abilities = singlePokeData.abilities.map((ability) => {
-            console.log(ability.ability.name)
-            return `<p>${ability.ability.name}</p>` 
-        })
+    const pokeData = await fetch(singlePoke.url)
+    const singlePokeData = await pokeData.json()
+    console.log(singlePokeData)
+
+    const abilities = singlePokeData.abilities.map((ability) => {
+        console.log(ability.ability.name)
+        return `<p>${ability.ability.name}</p>` 
+    })
 
 
-        allPokeDiv.innerHTML = `
-            <h2>Selected Pokemon</h2>
-            <h2>${singlePokeData.name}</h2>
-            <img src=${singlePokeData.sprites.front_default} />
-            <h2>Abilities</h2>
-        ` + abilities.join("") +`
-            <p>Generation: ${singlePokeData.id*1 < 151 ? "1" : "2" }</p>
-            <a href=#>Back to all Pokemon</a>
-        `
-    } catch (error) {
-        console.error(error)
-    }
+    singlePokeDiv.innerHTML = `<h2>Selected Pokemon</h2>
+        <h2>${singlePokeData.name}</h2>
+        <img src=${singlePokeData.sprites.front_default} />
+        <h3>Abilities</h3>
+    ` + abilities.join("") +`
+        <p>Generation: ${singlePokeData.id*1 < 151 ? "1" : "2" }</p>
+        <a href=#>Back to all Pokemon</a>
+    `
 }
 
 // fetchAllPokemons()
