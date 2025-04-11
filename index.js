@@ -15,7 +15,7 @@ const render = async () => {
             <a href=#${poke.name}>${poke.name}</div>
         `
     })
-    allPokeDiv.innerHTML = pokeList.join("")
+    // allPokeDiv.innerHTML = pokeList.join("")
 
     // Get CURRENT #URL from browser location. Remove "#" by .slice(1) so it's just the name. 
     // THIS IS THE CRITERIA.
@@ -28,6 +28,12 @@ const render = async () => {
         return poke.name === name
     })
     console.log(singlePoke)
+
+    // Now, it's time to SELECT what to RENDER.
+    // If I found a single pokemon, empty the allPokeDiv.
+    // Else, show me the list of pokemon
+
+    allPokeDiv.innerHTML = singlePoke ? "" : pokeList.join("")
     
     if(singlePoke) {
         try {
@@ -46,10 +52,14 @@ const render = async () => {
                 <h2>${singlePokeData.name}</h2>
                 <img src=${singlePokeData.sprites.front_default} />
                 <h2>Abilities</h2>
-            ` + abilities.join("")
+            ` + abilities.join("") +`
+                <a href=#>Back to all Pokemon</a>
+            `
         } catch (error) {
             console.error(error)
         }
+    } else {
+        singlePokeDiv.innerHTML = ""
     }
 }
 
